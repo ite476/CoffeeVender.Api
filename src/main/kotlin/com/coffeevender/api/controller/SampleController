@@ -1,0 +1,14 @@
+package com.example.coffevenderapi.controller
+
+import com.example.coffevenderapi.service.CoffeeService
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+class SampleController(val coffeeService: CoffeeService) {
+
+    @GetMapping("/coffee/count")
+    fun getCoffeeCount(): Int {
+        return coffeeService.getCoffeeCount()
+    }
+}
