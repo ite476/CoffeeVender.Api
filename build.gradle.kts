@@ -28,7 +28,10 @@ dependencies {
 	}
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.21")
+	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 }
 
 java {
