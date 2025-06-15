@@ -106,10 +106,77 @@ class CoffeeOrderV1Controller {
         summary = "주문 상세 조회",
         description = "주문 상세 정보를 조회하는 API",
         responses = [
-            ApiResponse(responseCode = "200", description = "성공"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청"),
-            ApiResponse(responseCode = "401", description = "인증 실패"),
-            ApiResponse(responseCode = "404", description = "주문 없음"),
+            ApiResponse(
+                responseCode = "200", 
+                description = "성공",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "Success",
+                                summary = "성공",
+                                value = """
+                                { 
+                                    "message": "주문 정보를 불러왔습니다.",
+                                    "body": {
+                                        "id": 1,
+                                        "menu": {
+                                            "id": 1,
+                                            "name": "아메리카노",
+                                            "pricePoint": 5000
+                                        },
+                                        "isPurchased": false
+                                    }
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "401", 
+                description = "인증 실패",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "AuthenticationFailed",
+                                summary = "인증 실패",
+                                value = """
+                                { 
+                                    "message": "회원 인증에 실패했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404", 
+                description = "주문 없음",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "OrderNotFound",
+                                summary = "주문 없음",
+                                value = """
+                                { 
+                                    "message": "주문 정보를 불러오지 못했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            )
         ]
     )
     @GetMapping("/{id}")
