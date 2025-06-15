@@ -3,10 +3,14 @@ package com.coffeevender.api.v1.point
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.ExampleObject
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import com.coffeevender.api.v1.common.dto.response.ApiResponseV1
+import com.coffeevender.api.v1.point.dto.request.ChargePointRequestV1
+import com.coffeevender.api.v1.point.dto.response.PointBalanceResponseV1
 
 @RestController
 @RequestMapping("/api/v1/point")
@@ -23,6 +27,7 @@ class UserPointV1Controller {
                 content = [
                     Content(
                         mediaType = "application/json",
+                        schema = Schema(implementation = ChargePointRequestV1::class),
                         examples = [
                             ExampleObject(
                                 name = "Success",
@@ -85,10 +90,15 @@ class UserPointV1Controller {
     @PostMapping("/charge")
     fun chargePoint(
         @RequestHeader("userId") userId: String,
-        @RequestBody request: ChargePointRequest
-    ): ResponseEntity<Map<String, String>> {
+        @RequestBody request: ChargePointRequestV1
+    ): ResponseEntity<ApiResponseV1<Any>> {
         // TODO: 구현 필요
-        return ResponseEntity.ok(mapOf("message" to "포인트 충전에 성공했습니다."))
+        return ResponseEntity.ok(
+            ApiResponseV1(
+                message = "포인트 충전에 성공했습니다.",
+                body = null
+            )
+        )
     }
 
     @Operation(
@@ -101,6 +111,7 @@ class UserPointV1Controller {
                 content = [
                     Content(
                         mediaType = "application/json",
+                        schema = Schema(implementation = PointBalanceResponseV1::class),
                         examples = [
                             ExampleObject(
                                 name = "Success",
@@ -144,15 +155,13 @@ class UserPointV1Controller {
     @GetMapping
     fun getPointBalance(
         @RequestHeader("userId") userId: String
-    ): ResponseEntity<Map<String, Any>> {
+    ): ResponseEntity<ApiResponseV1<PointBalanceResponseV1>> {
         // TODO: 구현 필요
-        return ResponseEntity.ok(mapOf(
-            "message" to "포인트 잔고를 불러왔습니다.",
-            "body" to mapOf("availablePoint" to 5000)
-        ))
+        return ResponseEntity.ok(
+            ApiResponseV1(
+                message = "포인트 잔고를 불러왔습니다.",
+                body = PointBalanceResponseV1(availablePoint = 5000)
+            )
+        )
     }
 }
-
-data class ChargePointRequest(
-    val chargeAmountWon: Int
-) 
