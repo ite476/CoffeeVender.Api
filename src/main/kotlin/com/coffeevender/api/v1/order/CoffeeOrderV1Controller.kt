@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.ExampleObject
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -15,9 +17,68 @@ class CoffeeOrderV1Controller {
         summary = "주문 목록 조회",
         description = "주문 목록을 조회하는 API",
         responses = [
-            ApiResponse(responseCode = "200", description = "성공"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청"),
-            ApiResponse(responseCode = "401", description = "인증 실패"),
+            ApiResponse(
+                responseCode = "200", 
+                description = "성공",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "Success",
+                                summary = "성공",
+                                value = """
+                                { 
+                                    "message": "주문 목록을 불러왔습니다.",
+                                    "body": [
+                                        {
+                                            "id": 1,
+                                            "menu": {
+                                                "id": 1,
+                                                "name": "아메리카노",
+                                                "pricePoint": 5000
+                                            },
+                                            "isPurchased": false
+                                        }
+                                    ]
+                                }
+                                """
+                            ),
+                            ExampleObject(
+                                name = "Success-NoOrder",
+                                summary = "성공 - 주문 없음",
+                                value = """
+                                { 
+                                    "message": "주문 목록을 불러왔습니다.",
+                                    "body": []
+                                }
+                                """
+                            ),
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "401", 
+                description = "인증 실패",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "AuthenticationFailed",
+                                summary = "인증 실패",
+                                value = """
+                                { 
+                                    "message": "회원 인증에 실패했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
         ]
     )
     @GetMapping
