@@ -203,11 +203,90 @@ class CoffeeOrderV1Controller {
         summary = "주문 결제",
         description = "주문을 결제하는 API",
         responses = [
-            ApiResponse(responseCode = "201", description = "주문 결제 완료"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청"),
-            ApiResponse(responseCode = "401", description = "인증 실패"),   
-            ApiResponse(responseCode = "404", description = "주문 없음"),
-            ApiResponse(responseCode = "409", description = "잔여 포인트 부족"),
+            ApiResponse(
+                responseCode = "201", 
+                description = "주문 결제 완료",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "Success",
+                                summary = "성공",
+                                value = """
+                                { 
+                                    "message": "주문 결제가 완료되었습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "401", 
+                description = "인증 실패",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "AuthenticationFailed",
+                                summary = "인증 실패",
+                                value = """
+                                { 
+                                    "message": "회원 인증에 실패했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "404", 
+                description = "주문 없음",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "OrderNotFound",
+                                summary = "주문 없음",
+                                value = """
+                                { 
+                                    "message": "주문 정보를 불러오지 못했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "409", 
+                description = "잔여 포인트 부족",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "InsufficientPoint",
+                                summary = "잔여 포인트 부족",
+                                value = """
+                                { 
+                                    "message": "잔여 포인트가 부족합니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            )
         ]
     )
     @PostMapping("/{id}/purchase")
