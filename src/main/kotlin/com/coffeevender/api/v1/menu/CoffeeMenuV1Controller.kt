@@ -129,10 +129,69 @@ class CoffeeMenuV1Controller {
         summary = "커피 메뉴 주문",
         description = "커피 메뉴를 주문하는 API",
         responses = [
-            ApiResponse(responseCode = "201", description = "주문 완료"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청"),
-            ApiResponse(responseCode = "422", description = "없는 주문 메뉴"),
-            ApiResponse(responseCode = "401", description = "인증 실패"),
+            ApiResponse(
+                responseCode = "201", 
+                description = "주문 완료",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "Success",
+                                summary = "성공",
+                                value = """
+                                { 
+                                    "message": "주문이 완료되었습니다.",
+                                    "body": null
+                                }
+                                """
+                            ),
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "401", 
+                description = "인증 실패",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "AuthenticationFailed",
+                                summary = "인증 실패",
+                                value = """
+                                { 
+                                    "message": "회원 인증에 실패했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "422", 
+                description = "데이터 형식 오류",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "OrderMenuNotFound",
+                                summary = "없는 메뉴 코드",
+                                value = """
+                                { 
+                                    "message": "올바르지 않은 메뉴 코드입니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
         ]
     )
     @PostMapping("/{id}/order")
