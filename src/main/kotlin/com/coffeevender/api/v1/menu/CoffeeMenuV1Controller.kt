@@ -3,10 +3,14 @@ package com.coffeevender.api.v1.menu
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.ExampleObject
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import com.coffeevender.api.v1.common.dto.response.ApiResponseV1
+import com.coffeevender.api.v1.menu.dto.response.CoffeeMenuResponseV1
+import com.coffeevender.api.v1.menu.dto.response.FavoriteCoffeeMenuResponseV1
 
 @RestController
 @RequestMapping("/api/v1/menu/coffee")
@@ -23,6 +27,7 @@ class CoffeeMenuV1Controller {
                 content = [
                     Content(
                         mediaType = "application/json",
+                        schema = Schema(implementation = CoffeeMenuResponseV1::class),
                         examples = [
                             ExampleObject(
                                 name = "Success",
@@ -57,18 +62,20 @@ class CoffeeMenuV1Controller {
         ]
     )
     @GetMapping("")
-    fun getCoffeeMenuList(): ResponseEntity<Map<String, Any>> {
+    fun getCoffeeMenuList(): ResponseEntity<ApiResponseV1<Iterable<CoffeeMenuResponseV1>>> {
         // TODO: 구현 필요
-        return ResponseEntity.ok(mapOf(
-            "message" to "메뉴 목록을 불러왔습니다.",
-            "body" to listOf(
-                mapOf(
-                    "id" to 1,
-                    "name" to "아메리카노",
-                    "pricePoint" to 5000
+        return ResponseEntity.ok(
+            ApiResponseV1(
+                message = "메뉴 목록을 불러왔습니다.",
+                body = listOf(
+                    CoffeeMenuResponseV1(
+                        id = 1,
+                        name = "아메리카노",
+                        pricePoint = 5000
+                    )
                 )
             )
-        ))
+        )
     }
 
     @Operation(
@@ -81,6 +88,7 @@ class CoffeeMenuV1Controller {
                 content = [
                     Content(
                         mediaType = "application/json",
+                        schema = Schema(implementation = FavoriteCoffeeMenuResponseV1::class),
                         examples = [
                             ExampleObject(
                                 name = "Success",
@@ -108,21 +116,23 @@ class CoffeeMenuV1Controller {
         ]
     )
     @GetMapping("/favorite")
-    fun getFavoriteCoffeeMenuList(): ResponseEntity<Map<String, Any>> {
+    fun getFavoriteCoffeeMenuList(): ResponseEntity<ApiResponseV1<Iterable<FavoriteCoffeeMenuResponseV1>>> {
         // TODO: 구현 필요
-        return ResponseEntity.ok(mapOf(
-            "message" to "인기 메뉴 목록을 불러왔습니다.",
-            "body" to listOf(
-                mapOf(
-                    "menu" to mapOf(
-                        "id" to 1,
-                        "name" to "아메리카노",
-                        "pricePoint" to 5000
-                    ),
-                    "soldCount" to 15
+        return ResponseEntity.ok(
+            ApiResponseV1(
+                message = "인기 메뉴 목록을 불러왔습니다.",
+                body = listOf(
+                    FavoriteCoffeeMenuResponseV1(
+                        menu = CoffeeMenuResponseV1(
+                            id = 1,
+                            name = "아메리카노",
+                            pricePoint = 5000
+                        ),
+                        soldCount = 15
+                    )
                 )
             )
-        ))
+        )
     }
 
     @Operation(
@@ -196,12 +206,18 @@ class CoffeeMenuV1Controller {
     )
     @PostMapping("/{id}/order")
     fun orderCoffee(
+        @Schema(description = "커피 메뉴 ID", example = "1")
         @PathVariable id: Long,
         @RequestHeader("userId") userId: String
-    ): ResponseEntity<Map<String, String>> {
+    ): ResponseEntity<ApiResponseV1<Any>> {
         // TODO: 구현 필요
         return ResponseEntity.status(201)
             .header("Location", "/order/1")
-            .body(mapOf("message" to "주문이 완료되었습니다."))
+            .body(
+                ApiResponseV1(
+                    message = "주문이 완료되었습니다.",
+                    body = null
+                )
+            )
     }
 } 
