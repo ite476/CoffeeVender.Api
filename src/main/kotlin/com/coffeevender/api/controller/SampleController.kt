@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/sample")
 @Tag(name = "Sample API", description = "샘플 API 엔드포인트")
+@Deprecated("Deprecated API")
 class SampleController {
 
     @Operation(
