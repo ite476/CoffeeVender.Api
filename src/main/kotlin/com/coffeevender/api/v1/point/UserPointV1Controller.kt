@@ -95,9 +95,50 @@ class UserPointV1Controller {
         summary = "포인트 잔액 조회",
         description = "포인트 잔액을 조회하는 API",
         responses = [
-            ApiResponse(responseCode = "200", description = "성공"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청"),
-            ApiResponse(responseCode = "401", description = "인증 실패"),
+            ApiResponse(
+                responseCode = "200", 
+                description = "성공",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "Success",
+                                summary = "성공",
+                                value = """
+                                { 
+                                    "message": "포인트 잔고를 불러왔습니다.",
+                                    "body": {
+                                        "availablePoint": 5000
+                                    }
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
+            ApiResponse(
+                responseCode = "401", 
+                description = "인증 실패",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "AuthenticationFailed",
+                                summary = "인증 실패",
+                                value = """
+                                { 
+                                    "message": "회원 인증에 실패했습니다.",
+                                    "body": null
+                                }
+                                """
+                            )
+                        ]
+                    )
+                ]
+            ),
         ]
     )
     @GetMapping
