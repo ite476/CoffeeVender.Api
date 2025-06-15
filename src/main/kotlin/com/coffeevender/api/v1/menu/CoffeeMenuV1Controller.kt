@@ -75,9 +75,36 @@ class CoffeeMenuV1Controller {
         summary = "커피 인기 메뉴 목록 조회",
         description = "커피 인기 메뉴 목록을 조회하는 API",
         responses = [
-            ApiResponse(responseCode = "200", description = "성공"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청"),
-            ApiResponse(responseCode = "404", description = "데이터 없음")
+            ApiResponse(
+                responseCode = "200", 
+                description = "성공",
+                content = [
+                    Content(
+                        mediaType = "application/json",
+                        examples = [
+                            ExampleObject(
+                                name = "Success",
+                                summary = "성공",
+                                value = """
+                                { 
+                                    "message": "인기 메뉴 목록을 불러왔습니다.",
+                                    "body": [
+                                        {
+                                            "menu": {
+                                                "id": 1,
+                                                "name": "아메리카노",
+                                                "pricePoint": 5000
+                                            },
+                                            "soldCount": 15
+                                        }
+                                    ]
+                                }
+                                """
+                            ),
+                        ]
+                    )
+                ]
+            ),
         ]
     )
     @GetMapping("/favorite")
