@@ -1,5 +1,6 @@
 package com.coffeevender.core.coffeeMenu.service
 
+import com.coffeevender.core.coffeeMenu.dto.CoffeeMenuCreateCommandDto
 import com.coffeevender.core.coffeeMenu.dto.CoffeeMenuDto
 import com.coffeevender.core.coffeeMenu.dto.FavoriteCoffeeMenuDto
 import com.coffeevender.core.coffeeMenu.error.CoffeeMenuError
