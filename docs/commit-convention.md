@@ -12,8 +12,14 @@
 {커밋키워드}: {커밋 제목}
 
 > {바디, 모든 라인을 마크다운 blockquote (>) 로 들여쓰기 처리}
+> {코드 일부를 표현하는 경우, 백틱으로 감싸서 표현.}
+> {(예: `@SpringBootApplication`, `SecurityConfig` (클래스, 객체 명))}
+> {엔드 포인트를 표현하는 경우, 백틱으로 감싸서 표현.}
+> {(예: `POST /api/v1/auth/login`)}
 
-- {꼬리, 관련 GitHub Issue/PR 링크, 예: #123}
+- {선택 영역 (없는 경우 완전 생략 가능)}
+- {꼬리, 관련 GitHub Issue/PR 링크}
+- {예: #123}
 ```
 
 ### ✅ Example
@@ -21,11 +27,19 @@
 ```markdown
 feat: 사용자 인증 API 추가
 
-> POST /api/v1/auth/login 엔드포인트 구현
+> `POST /api/v1/auth/login` 엔드포인트 구현
 > Spring Security JWT Filter 기반 인증 구조 추가
-> PasswordEncoder Bean 설정
+> `PasswordEncoder` Bean 설정
 
 - #45
+```
+
+```markdown
+refactor: UserService 의존성 주입 방식 개선
+
+> 생성자 주입 방식으로 변경하여 불변성 보장
+> `@Autowired` 어노테이션 제거로 명시적 의존성 표현
+> 테스트 코드에서 Mock 객체 주입 방식 단순화
 ```
 
 ---
