@@ -5,10 +5,10 @@ spring:
   application:
     name: CoffeeVenderApi
   datasource:
-    url: ${COFFEEVENDER_DATASOURCE_URL}
+    url: jdbc:postgresql://localhost:15432/coffee_db
     driver-class-name: org.postgresql.Driver
-    username: ${COFFEEVENDER_DATASOURCE_USERNAME}
-    password: ${COFFEEVENDER_DATASOURCE_PASSWORD}
+    username: coffee_user
+    password: asdf1234!
   jpa:
     hibernate:
       ddl-auto: update
